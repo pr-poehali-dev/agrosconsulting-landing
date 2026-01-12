@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -14,6 +14,28 @@ export default function Index() {
   const [avgCheck, setAvgCheck] = useState(50000);
   const [repeatPurchases, setRepeatPurchases] = useState(20);
   const [repeatCheck, setRepeatCheck] = useState(35000);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [formData, setFormData] = useState({ name: '', contact: '', segment: '', task: '' });
+  const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    document.querySelectorAll('.animate-on-scroll').forEach((el) => {
+      observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   const calculatePotential = () => {
     const currentSales = (leads * conversion / 100) * avgCheck;
@@ -37,6 +59,29 @@ export default function Index() {
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     element?.scrollIntoView({ behavior: 'smooth' });
+    setMobileMenuOpen(false);
+  };
+
+  const handleFormSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setFormStatus('sending');
+
+    try {
+      const response = await fetch('https://functions.poehali.dev/0e3d408b-16cc-41a7-a070-fdf0317c354a', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+
+      if (response.ok) {
+        setFormStatus('success');
+        setFormData({ name: '', contact: '', segment: '', task: '' });
+      } else {
+        setFormStatus('error');
+      }
+    } catch (error) {
+      setFormStatus('error');
+    }
   };
 
   return (
@@ -62,7 +107,35 @@ export default function Index() {
               </button>
             ))}
           </nav>
+          <button
+            className="lg:hidden text-primary"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            <Icon name={mobileMenuOpen ? 'X' : 'Menu'} size={24} />
+          </button>
         </div>
+        {mobileMenuOpen && (
+          <div className="lg:hidden bg-background border-t border-border animate-fade-in">
+            <nav className="container mx-auto px-4 py-4 flex flex-col gap-4">
+              {['about', 'audience', 'services', 'packages', 'case', 'calculator', 'faq', 'contact'].map((section) => (
+                <button
+                  key={section}
+                  onClick={() => scrollToSection(section)}
+                  className="text-left text-muted-foreground hover:text-primary transition-colors"
+                >
+                  {section === 'about' && 'О себе'}
+                  {section === 'audience' && 'Кому помогаю'}
+                  {section === 'services' && 'Услуги'}
+                  {section === 'packages' && 'Пакеты'}
+                  {section === 'case' && 'Кейс'}
+                  {section === 'calculator' && 'Калькулятор'}
+                  {section === 'faq' && 'FAQ'}
+                  {section === 'contact' && 'Заявка'}
+                </button>
+              ))}
+            </nav>
+          </div>
+        )}
       </header>
 
       <section className="pt-32 pb-20 px-4">
@@ -116,7 +189,7 @@ export default function Index() {
         </div>
       </section>
 
-      <section id="about" className="py-20 px-4">
+      <section id="about" className="py-20 px-4 animate-on-scroll">
         <div className="container mx-auto max-w-4xl">
           <h2 className="text-4xl font-bold mb-8 text-center">О себе</h2>
           <p className="text-lg text-muted-foreground mb-8 text-center max-w-2xl mx-auto">
@@ -140,7 +213,7 @@ export default function Index() {
         </div>
       </section>
 
-      <section id="audience" className="py-20 px-4 bg-card/30">
+      <section id="audience" className="py-20 px-4 bg-card/30 animate-on-scroll">
         <div className="container mx-auto max-w-6xl">
           <h2 className="text-4xl font-bold mb-12 text-center">Кому помогаю</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -180,7 +253,7 @@ export default function Index() {
         </div>
       </section>
 
-      <section id="services" className="py-20 px-4">
+      <section id="services" className="py-20 px-4 animate-on-scroll">
         <div className="container mx-auto max-w-6xl">
           <h2 className="text-4xl font-bold mb-12 text-center">Услуги</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -228,7 +301,7 @@ export default function Index() {
         </div>
       </section>
 
-      <section id="packages" className="py-20 px-4 bg-card/30">
+      <section id="packages" className="py-20 px-4 bg-card/30 animate-on-scroll">
         <div className="container mx-auto max-w-6xl">
           <h2 className="text-4xl font-bold mb-12 text-center">Пакеты сопровождения</h2>
           <div className="grid lg:grid-cols-3 gap-8 mb-8">
@@ -300,7 +373,7 @@ export default function Index() {
         </div>
       </section>
 
-      <section id="case" className="py-20 px-4">
+      <section id="case" className="py-20 px-4 animate-on-scroll">
         <div className="container mx-auto max-w-5xl">
           <h2 className="text-4xl font-bold mb-4 text-center">Кейс</h2>
           <h3 className="text-2xl text-center text-muted-foreground mb-12">
@@ -380,7 +453,7 @@ export default function Index() {
         </div>
       </section>
 
-      <section id="calculator" className="py-20 px-4 bg-card/30">
+      <section id="calculator" className="py-20 px-4 bg-card/30 animate-on-scroll">
         <div className="container mx-auto max-w-4xl">
           <h2 className="text-4xl font-bold mb-4 text-center">Калькулятор потенциала</h2>
           <p className="text-center text-muted-foreground mb-12">
@@ -467,7 +540,7 @@ export default function Index() {
         </div>
       </section>
 
-      <section id="faq" className="py-20 px-4">
+      <section id="faq" className="py-20 px-4 animate-on-scroll">
         <div className="container mx-auto max-w-3xl">
           <h2 className="text-4xl font-bold mb-12 text-center">Частые вопросы</h2>
           <Accordion type="single" collapsible>
@@ -506,7 +579,7 @@ export default function Index() {
         </div>
       </section>
 
-      <section id="contact" className="py-20 px-4 bg-card/30">
+      <section id="contact" className="py-20 px-4 bg-card/30 animate-on-scroll">
         <div className="container mx-auto max-w-2xl">
           <h2 className="text-4xl font-bold mb-4 text-center">Оставить заявку</h2>
           <p className="text-center text-muted-foreground mb-12">
@@ -515,20 +588,41 @@ export default function Index() {
 
           <Card>
             <CardContent className="pt-6">
-              <form className="space-y-6">
+              <form className="space-y-6" onSubmit={handleFormSubmit}>
                 <div>
                   <Label htmlFor="name">Ваше имя</Label>
-                  <Input id="name" placeholder="Иван Петров" className="mt-2" />
+                  <Input
+                    id="name"
+                    placeholder="Иван Петров"
+                    className="mt-2"
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    required
+                  />
                 </div>
 
                 <div>
                   <Label htmlFor="contact">Telegram / WhatsApp / Email</Label>
-                  <Input id="contact" placeholder="@username или email" className="mt-2" />
+                  <Input
+                    id="contact"
+                    placeholder="@username или email"
+                    className="mt-2"
+                    value={formData.contact}
+                    onChange={(e) => setFormData({ ...formData, contact: e.target.value })}
+                    required
+                  />
                 </div>
 
                 <div>
                   <Label htmlFor="segment">Ваш бизнес</Label>
-                  <Input id="segment" placeholder="Дилер запчастей / Агрохолдинг / КФХ / Инвестор" className="mt-2" />
+                  <Input
+                    id="segment"
+                    placeholder="Дилер запчастей / Агрохолдинг / КФХ / Инвестор"
+                    className="mt-2"
+                    value={formData.segment}
+                    onChange={(e) => setFormData({ ...formData, segment: e.target.value })}
+                    required
+                  />
                 </div>
 
                 <div>
@@ -538,12 +632,22 @@ export default function Index() {
                     placeholder="Опишите, какую задачу хотите решить или какой результат получить"
                     rows={4}
                     className="mt-2"
+                    value={formData.task}
+                    onChange={(e) => setFormData({ ...formData, task: e.target.value })}
+                    required
                   />
                 </div>
 
-                <Button type="submit" size="lg" className="w-full">
-                  Отправить заявку
+                <Button type="submit" size="lg" className="w-full" disabled={formStatus === 'sending'}>
+                  {formStatus === 'sending' ? 'Отправка...' : 'Отправить заявку'}
                 </Button>
+
+                {formStatus === 'success' && (
+                  <p className="text-center text-primary font-semibold">Заявка отправлена! Свяжусь с вами в течение 24 часов.</p>
+                )}
+                {formStatus === 'error' && (
+                  <p className="text-center text-destructive">Ошибка отправки. Попробуйте позже или свяжитесь напрямую.</p>
+                )}
               </form>
 
               <div className="mt-8 pt-8 border-t border-border">
