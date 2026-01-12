@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Badge } from '@/components/ui/badge';
+import { Checkbox } from '@/components/ui/checkbox';
 import Icon from '@/components/ui/icon';
 
 export default function Index() {
@@ -17,6 +18,8 @@ export default function Index() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [formData, setFormData] = useState({ name: '', contact: '', segment: '', task: '' });
   const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+  const [privacyAccepted, setPrivacyAccepted] = useState(false);
+  const [dataProcessingAccepted, setDataProcessingAccepted] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -257,6 +260,15 @@ export default function Index() {
         <div className="container mx-auto max-w-6xl">
           <h2 className="text-4xl font-bold mb-12 text-center">Услуги</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <Card className="bg-primary/10 border-primary">
+              <CardHeader>
+                <CardTitle className="text-lg text-primary">Консультация 60 минут</CardTitle>
+                <div className="text-3xl font-bold text-primary">15 000 ₽</div>
+              </CardHeader>
+              <CardContent>
+                <CardDescription>Результат: план действий на 14 дней с конкретными шагами</CardDescription>
+              </CardContent>
+            </Card>
             {[
               {
                 title: 'Консалтинг для дилеров',
@@ -288,15 +300,6 @@ export default function Index() {
                 </CardContent>
               </Card>
             ))}
-            <Card className="bg-primary/10 border-primary">
-              <CardHeader>
-                <CardTitle className="text-lg text-primary">Консультация 60 минут</CardTitle>
-                <div className="text-3xl font-bold text-primary">15 000 ₽</div>
-              </CardHeader>
-              <CardContent>
-                <CardDescription>Результат: план действий на 14 дней с конкретными шагами</CardDescription>
-              </CardContent>
-            </Card>
           </div>
         </div>
       </section>
@@ -638,7 +641,44 @@ export default function Index() {
                   />
                 </div>
 
-                <Button type="submit" size="lg" className="w-full" disabled={formStatus === 'sending'}>
+                <div className="space-y-4 pt-2">
+                  <div className="flex items-start gap-3">
+                    <Checkbox
+                      id="privacy"
+                      checked={privacyAccepted}
+                      onCheckedChange={(checked) => setPrivacyAccepted(checked as boolean)}
+                      required
+                    />
+                    <label htmlFor="privacy" className="text-sm text-muted-foreground leading-relaxed cursor-pointer">
+                      Я согласен с{' '}
+                      <a href="#" className="text-primary hover:underline">
+                        политикой конфиденциальности
+                      </a>
+                    </label>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <Checkbox
+                      id="data-processing"
+                      checked={dataProcessingAccepted}
+                      onCheckedChange={(checked) => setDataProcessingAccepted(checked as boolean)}
+                      required
+                    />
+                    <label htmlFor="data-processing" className="text-sm text-muted-foreground leading-relaxed cursor-pointer">
+                      Я даю согласие на{' '}
+                      <a href="#" className="text-primary hover:underline">
+                        обработку персональных данных
+                      </a>
+                    </label>
+                  </div>
+                </div>
+
+                <Button 
+                  type="submit" 
+                  size="lg" 
+                  className="w-full" 
+                  disabled={formStatus === 'sending' || !privacyAccepted || !dataProcessingAccepted}
+                >
                   {formStatus === 'sending' ? 'Отправка...' : 'Отправить заявку'}
                 </Button>
 
