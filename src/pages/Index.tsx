@@ -141,8 +141,11 @@ export default function Index() {
         )}
       </header>
 
-      <section className="pt-32 pb-20 px-4">
-        <div className="container mx-auto max-w-4xl text-center">
+      <section className="pt-32 pb-20 px-4 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10 pointer-events-none"></div>
+        <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="container mx-auto max-w-4xl text-center relative z-10">
           <div className="animate-fade-in">
             <h1 className="text-5xl lg:text-6xl font-bold mb-6 leading-tight">
               Маркетинговое сопровождение агробизнеса
