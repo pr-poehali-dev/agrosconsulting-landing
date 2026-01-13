@@ -141,19 +141,20 @@ export default function Index() {
         )}
       </header>
 
-      <section className="pt-32 pb-20 px-4 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10 pointer-events-none"></div>
-        <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl pointer-events-none"></div>
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
+      <section className="pt-32 pb-20 px-4 relative overflow-hidden bg-gradient-to-br from-primary/20 via-primary/5 to-secondary/15">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,_hsl(82,45%,35%,0.15),transparent_50%)] pointer-events-none"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,_hsl(30,35%,50%,0.12),transparent_50%)] pointer-events-none"></div>
+        <div className="absolute top-10 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl pointer-events-none animate-pulse"></div>
+        <div className="absolute bottom-10 right-1/4 w-80 h-80 bg-secondary/15 rounded-full blur-3xl pointer-events-none animate-pulse" style={{animationDelay: '1s'}}></div>
         <div className="container mx-auto max-w-4xl text-center relative z-10">
           <div className="animate-fade-in">
-            <h1 className="text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+            <h1 className="text-5xl lg:text-6xl font-bold mb-6 leading-tight drop-shadow-sm">
               Маркетинговое сопровождение агробизнеса
             </h1>
-            <p className="text-xl text-muted-foreground mb-4">
+            <p className="text-xl text-foreground/80 mb-4 font-medium">
               Системный рост для дилерских центров, агрохолдингов, КФХ и инвесторов
             </p>
-            <p className="text-lg text-primary mb-8 font-semibold">
+            <p className="text-lg text-primary mb-8 font-bold bg-background/60 backdrop-blur-sm py-3 px-6 rounded-lg inline-block shadow-lg">
               Я не веду рекламу руками. Выстраиваю систему: стратегия → воронка → KPI → внедрение.
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
