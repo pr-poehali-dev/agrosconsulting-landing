@@ -165,7 +165,7 @@ export default function Index() {
             </div>
             <div className="animate-fade-in">
               <img
-                src="https://cdn.poehali.dev/projects/81bddce6-d286-44ec-a7b5-e2065115756a/files/77adff6f-18e6-4a86-8ec5-258287951ac2.jpg"
+                src="https://sun9-57.userapi.com/impg/BUcEJ0zJTNqDl-9S56kQZBgpU76VCGSKEqb_NQ/yW9SWFvvx4I.jpg?size=1280x1280&quality=95&sign=c11f4da16d3aa84e20ac4dc39f87c798&type=album"
                 alt="Эксперт по агромаркетингу"
                 className="rounded-lg shadow-2xl w-full"
               />
