@@ -142,33 +142,24 @@ export default function Index() {
       </header>
 
       <section className="pt-32 pb-20 px-4">
-        <div className="container mx-auto max-w-6xl">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="animate-fade-in">
-              <h1 className="text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-                Маркетинговое сопровождение агробизнеса
-              </h1>
-              <p className="text-xl text-muted-foreground mb-4">
-                Системный рост для дилерских центров, агрохолдингов, КФХ и инвесторов
-              </p>
-              <p className="text-lg text-primary mb-8 font-semibold">
-                Я не веду рекламу руками. Выстраиваю систему: стратегия → воронка → KPI → внедрение.
-              </p>
-              <div className="flex flex-wrap gap-4">
-                <Button size="lg" onClick={() => scrollToSection('contact')}>
-                  Получить план роста
-                </Button>
-                <Button size="lg" variant="outline" onClick={() => scrollToSection('case')}>
-                  Посмотреть кейс
-                </Button>
-              </div>
-            </div>
-            <div className="animate-fade-in">
-              <img
-                src="https://cdn.poehali.dev/projects/81bddce6-d286-44ec-a7b5-e2065115756a/files/0b3636a9-44c0-4abd-a7e9-a59c45f874cd.jpg"
-                alt="Агробизнес и сельское хозяйство"
-                className="rounded-lg shadow-2xl w-full"
-              />
+        <div className="container mx-auto max-w-4xl text-center">
+          <div className="animate-fade-in">
+            <h1 className="text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+              Маркетинговое сопровождение агробизнеса
+            </h1>
+            <p className="text-xl text-muted-foreground mb-4">
+              Системный рост для дилерских центров, агрохолдингов, КФХ и инвесторов
+            </p>
+            <p className="text-lg text-primary mb-8 font-semibold">
+              Я не веду рекламу руками. Выстраиваю систему: стратегия → воронка → KPI → внедрение.
+            </p>
+            <div className="flex flex-wrap gap-4 justify-center">
+              <Button size="lg" onClick={() => scrollToSection('contact')}>
+                Получить план роста
+              </Button>
+              <Button size="lg" variant="outline" onClick={() => scrollToSection('case')}>
+                Посмотреть кейс
+              </Button>
             </div>
           </div>
         </div>
