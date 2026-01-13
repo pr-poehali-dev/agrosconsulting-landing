@@ -147,18 +147,12 @@ export default function Index() {
             <h1 className="text-5xl lg:text-6xl font-bold mb-6 leading-tight text-background">
               Маркетинговое сопровождение агробизнеса
             </h1>
-            <p className="text-xl text-background/90 mb-4">
+            <p className="text-xl text-background/90 mb-8">
               Системный рост для дилерских центров, агрохолдингов, КФХ и инвесторов
             </p>
-            <p className="text-lg text-background mb-8 font-semibold">
-              Я не веду рекламу руками. Выстраиваю систему: стратегия → воронка → KPI → внедрение.
-            </p>
             <div className="flex flex-wrap gap-4 justify-center">
-              <Button size="lg" onClick={() => scrollToSection('contact')}>
+              <Button size="lg" className="bg-background text-primary hover:bg-background/90" onClick={() => scrollToSection('contact')}>
                 Получить план роста
-              </Button>
-              <Button size="lg" variant="outline" onClick={() => scrollToSection('case')}>
-                Посмотреть кейс
               </Button>
             </div>
           </div>
